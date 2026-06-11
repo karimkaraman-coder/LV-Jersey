@@ -575,6 +575,8 @@
       height: 540px;
       overflow: hidden;
       background: transparent;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
       animation: cta-fade-in-up 0.9s 0.3s ease both;
     }
     .cta-marquee-track {
@@ -592,17 +594,6 @@
       border-bottom: 1px solid rgba(255,255,255,0.07);
       white-space: nowrap;
     }
-    .cta-marquee-fade-top,
-    .cta-marquee-fade-bottom {
-      pointer-events: none;
-      position: absolute;
-      left: 0; right: 0;
-      height: 160px;
-      z-index: 2;
-    }
-    .cta-marquee-fade-top    { top: 0;    background: linear-gradient(to bottom, rgba(10,5,2,0.75) 30%, transparent); }
-    .cta-marquee-fade-bottom { bottom: 0; background: linear-gradient(to top,    rgba(10,5,2,0.75) 30%, transparent); }
-
     /* ── DIVIDER ────────────────────────────────── */
     .divider {
       height: 1px;
@@ -869,8 +860,6 @@
             <div class="cta-marquee-item" aria-hidden="true">Handgefertigt</div>
             <div class="cta-marquee-item" aria-hidden="true">Limitierte Kollektion</div>
           </div>
-          <div class="cta-marquee-fade-top"></div>
-          <div class="cta-marquee-fade-bottom"></div>
         </div>
 
       </div>
@@ -910,9 +899,36 @@
     </div>
   </section>
 
-  <!-- ── AUSWÄRTS BANNER ── -->
-  <div class="banner">
+  <!-- ── AUSWÄRTS BANNER + CTA ── -->
+  <div class="cta-banner">
     <img src="https://www.figma.com/api/mcp/asset/46d5af7d-8442-4b82-a6ba-e3590e63bf58" alt="Auswärts-Trikot Action" />
+    <section class="cta-jersey-section">
+      <div class="cta-jersey-inner">
+
+        <div class="cta-jersey-left">
+          <p class="cta-jersey-label">| Herren |</p>
+          <h2 class="cta-jersey-heading">Eleganz trifft<br>Perfektion</h2>
+          <p class="cta-jersey-desc">Das Auswärts-Trikot 2026 strahlt in gebrochenen Weiß — zwischen Champagner und Mondlicht. Diskret, edel, unverwechselbar.</p>
+          <button class="btn-rotating"><span>Jetzt Entdecken</span></button>
+        </div>
+
+        <div class="cta-jersey-marquee-wrap">
+          <div class="cta-marquee-track">
+            <div class="cta-marquee-item">Champagner Weiß</div>
+            <div class="cta-marquee-item">LV Monogram</div>
+            <div class="cta-marquee-item">Goldene Akzente</div>
+            <div class="cta-marquee-item">Ultrapräzise Nähte</div>
+            <div class="cta-marquee-item">Limitierte Edition</div>
+            <div class="cta-marquee-item" aria-hidden="true">Champagner Weiß</div>
+            <div class="cta-marquee-item" aria-hidden="true">LV Monogram</div>
+            <div class="cta-marquee-item" aria-hidden="true">Goldene Akzente</div>
+            <div class="cta-marquee-item" aria-hidden="true">Ultrapräzise Nähte</div>
+            <div class="cta-marquee-item" aria-hidden="true">Limitierte Edition</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </div>
 
   <!-- ── AUSWÄRTS-TRIKOT ── -->
