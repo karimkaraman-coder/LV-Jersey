@@ -585,8 +585,23 @@
       .services-section,
       footer { padding-left: 40px; padding-right: 40px; }
 
-      .jersey-grid { grid-template-columns: repeat(2, 1fr); }
-      .iconic-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .jersey-grid,
+      .iconic-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 16px;
+        padding-bottom: 8px;
+      }
+      .jersey-grid::-webkit-scrollbar,
+      .iconic-grid::-webkit-scrollbar { display: none; }
+      .jersey-card,
+      .iconic-card {
+        flex: 0 0 43%;
+        scroll-snap-align: start;
+      }
       .services-grid { grid-template-columns: 1fr; gap: 40px; }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -596,8 +611,8 @@
       .hero-title { font-size: 32px; }
       .quality-section h2 { font-size: 24px; }
       .features-grid { grid-template-columns: 1fr; }
-      .jersey-grid { grid-template-columns: repeat(2, 1fr); }
-      .iconic-grid { grid-template-columns: 1fr; }
+      .jersey-card,
+      .iconic-card { flex: 0 0 78%; }
       .footer-grid { grid-template-columns: 1fr; }
       .features-section,
       .jersey-section,
