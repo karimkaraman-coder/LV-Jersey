@@ -497,6 +497,86 @@
       will-change: opacity;
     }
 
+    /* ── JERSEY CTA ─────────────────────────────── */
+    @keyframes marquee-vertical {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    @keyframes cta-fade-in-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .cta-jersey-section {
+      background: #1C0E06;
+      padding: 100px 80px;
+      overflow: hidden;
+    }
+    .cta-jersey-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .cta-jersey-left {
+      animation: cta-fade-in-up 0.9s ease both;
+    }
+    .cta-jersey-label {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .cta-jersey-heading {
+      font-size: clamp(2.6rem, 4.5vw, 4.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .cta-jersey-desc {
+      font-size: 17px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.85;
+      margin-bottom: 44px;
+      max-width: 460px;
+    }
+    .cta-jersey-marquee-wrap {
+      position: relative;
+      height: 540px;
+      overflow: hidden;
+      animation: cta-fade-in-up 0.9s 0.3s ease both;
+    }
+    .cta-marquee-track {
+      display: flex;
+      flex-direction: column;
+      animation: marquee-vertical 18s linear infinite;
+    }
+    .cta-marquee-item {
+      font-size: clamp(2rem, 3.2vw, 3.4rem);
+      font-family: 'Kadwa', 'Georgia', serif;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      padding: 26px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      white-space: nowrap;
+    }
+    .cta-marquee-fade-top,
+    .cta-marquee-fade-bottom {
+      pointer-events: none;
+      position: absolute;
+      left: 0; right: 0;
+      height: 160px;
+      z-index: 2;
+    }
+    .cta-marquee-fade-top    { top: 0;    background: linear-gradient(to bottom, #1C0E06 30%, transparent); }
+    .cta-marquee-fade-bottom { bottom: 0; background: linear-gradient(to top,    #1C0E06 30%, transparent); }
+
     /* ── DIVIDER ────────────────────────────────── */
     .divider {
       height: 1px;
@@ -583,7 +663,10 @@
       .jersey-section,
       .iconic-section,
       .services-section,
+      .cta-jersey-section,
       footer { padding-left: 40px; padding-right: 40px; }
+      .cta-jersey-inner { grid-template-columns: 1fr; gap: 40px; }
+      .cta-jersey-marquee-wrap { height: 360px; }
 
       .jersey-grid,
       .iconic-grid {
@@ -618,7 +701,9 @@
       .jersey-section,
       .iconic-section,
       .services-section,
+      .cta-jersey-section,
       footer { padding-left: 20px; padding-right: 20px; }
+      .cta-jersey-marquee-wrap { height: 280px; }
       .banner { height: 260px; }
       .section-header h2 { font-size: 26px; }
     }
@@ -725,6 +810,37 @@
           <h3>Hohe Reißfestigkeit und Elastizität</h3>
           <p>Hochflexible Stretch-Materialien überstehen extreme Belastungen im Zweikampf, ohne an Form zu verlieren.</p>
         </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── JERSEY CTA ── -->
+  <section class="cta-jersey-section">
+    <div class="cta-jersey-inner">
+
+      <div class="cta-jersey-left">
+        <p class="cta-jersey-label">| Herren |</p>
+        <h2 class="cta-jersey-heading">Das Trikot<br>der Champions</h2>
+        <p class="cta-jersey-desc">Das Standard Louis Vuitton Jersey vereint das ikonische Damier-Schachbrett mit modernster Performance-Technologie — für Spieler, die keine Kompromisse eingehen.</p>
+        <button class="btn-rotating"><span>Jetzt Entdecken</span></button>
+      </div>
+
+      <div class="cta-jersey-marquee-wrap">
+        <div class="cta-marquee-track">
+          <div class="cta-marquee-item">Damier Schachbrett</div>
+          <div class="cta-marquee-item">LV Monogram</div>
+          <div class="cta-marquee-item">Premium Performance</div>
+          <div class="cta-marquee-item">Handgefertigt</div>
+          <div class="cta-marquee-item">Limitierte Kollektion</div>
+          <div class="cta-marquee-item" aria-hidden="true">Damier Schachbrett</div>
+          <div class="cta-marquee-item" aria-hidden="true">LV Monogram</div>
+          <div class="cta-marquee-item" aria-hidden="true">Premium Performance</div>
+          <div class="cta-marquee-item" aria-hidden="true">Handgefertigt</div>
+          <div class="cta-marquee-item" aria-hidden="true">Limitierte Kollektion</div>
+        </div>
+        <div class="cta-marquee-fade-top"></div>
+        <div class="cta-marquee-fade-bottom"></div>
       </div>
 
     </div>
@@ -982,6 +1098,23 @@
 
       var revealSection = document.querySelector('.services-section');
       if (revealSection) revealObserver.observe(revealSection);
+
+      // CTA Marquee — Opacity-Fade zur Mitte hin
+      var ctaWrap = document.querySelector('.cta-jersey-marquee-wrap');
+      if (ctaWrap) {
+        (function tickCta() {
+          var items = ctaWrap.querySelectorAll('.cta-marquee-item');
+          var rect = ctaWrap.getBoundingClientRect();
+          var centerY = rect.top + rect.height / 2;
+          items.forEach(function (item) {
+            var r = item.getBoundingClientRect();
+            var dist = Math.abs(centerY - (r.top + r.height / 2));
+            var norm = Math.min(dist / (rect.height / 2), 1);
+            item.style.opacity = (1 - norm * 0.82).toString();
+          });
+          requestAnimationFrame(tickCta);
+        }());
+      }
     }());
   </script>
 </body>
