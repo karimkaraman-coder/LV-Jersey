@@ -498,6 +498,29 @@
     }
 
     /* ── JERSEY CTA ─────────────────────────────── */
+    .cta-banner {
+      position: relative;
+      width: 100%;
+      height: 680px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .cta-banner > img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(10,5,2,0.88) 35%, rgba(10,5,2,0.35) 65%, transparent);
+      z-index: 1;
+    }
     @keyframes marquee-vertical {
       from { transform: translateY(0); }
       to   { transform: translateY(-50%); }
@@ -508,7 +531,10 @@
     }
 
     .cta-jersey-section {
-      background: #1C0E06;
+      background: transparent;
+      position: relative;
+      z-index: 2;
+      width: 100%;
       padding: 100px 80px;
       overflow: hidden;
     }
@@ -574,8 +600,8 @@
       height: 160px;
       z-index: 2;
     }
-    .cta-marquee-fade-top    { top: 0;    background: linear-gradient(to bottom, #1C0E06 30%, transparent); }
-    .cta-marquee-fade-bottom { bottom: 0; background: linear-gradient(to top,    #1C0E06 30%, transparent); }
+    .cta-marquee-fade-top    { top: 0;    background: linear-gradient(to bottom, rgba(10,5,2,0.75) 30%, transparent); }
+    .cta-marquee-fade-bottom { bottom: 0; background: linear-gradient(to top,    rgba(10,5,2,0.75) 30%, transparent); }
 
     /* ── DIVIDER ────────────────────────────────── */
     .divider {
@@ -665,8 +691,9 @@
       .services-section,
       .cta-jersey-section,
       footer { padding-left: 40px; padding-right: 40px; }
+      .cta-banner { height: auto; min-height: 560px; }
       .cta-jersey-inner { grid-template-columns: 1fr; gap: 40px; }
-      .cta-jersey-marquee-wrap { height: 360px; }
+      .cta-jersey-marquee-wrap { height: 320px; }
 
       .jersey-grid,
       .iconic-grid {
@@ -703,7 +730,8 @@
       .services-section,
       .cta-jersey-section,
       footer { padding-left: 20px; padding-right: 20px; }
-      .cta-jersey-marquee-wrap { height: 280px; }
+      .cta-banner { min-height: 480px; }
+      .cta-jersey-marquee-wrap { height: 240px; }
       .banner { height: 260px; }
       .section-header h2 { font-size: 26px; }
     }
@@ -815,40 +843,38 @@
     </div>
   </section>
 
-  <!-- ── JERSEY CTA ── -->
-  <section class="cta-jersey-section">
-    <div class="cta-jersey-inner">
-
-      <div class="cta-jersey-left">
-        <p class="cta-jersey-label">| Herren |</p>
-        <h2 class="cta-jersey-heading">Das Trikot<br>der Champions</h2>
-        <p class="cta-jersey-desc">Das Standard Louis Vuitton Jersey vereint das ikonische Damier-Schachbrett mit modernster Performance-Technologie — für Spieler, die keine Kompromisse eingehen.</p>
-        <button class="btn-rotating"><span>Jetzt Entdecken</span></button>
-      </div>
-
-      <div class="cta-jersey-marquee-wrap">
-        <div class="cta-marquee-track">
-          <div class="cta-marquee-item">Damier Schachbrett</div>
-          <div class="cta-marquee-item">LV Monogram</div>
-          <div class="cta-marquee-item">Premium Performance</div>
-          <div class="cta-marquee-item">Handgefertigt</div>
-          <div class="cta-marquee-item">Limitierte Kollektion</div>
-          <div class="cta-marquee-item" aria-hidden="true">Damier Schachbrett</div>
-          <div class="cta-marquee-item" aria-hidden="true">LV Monogram</div>
-          <div class="cta-marquee-item" aria-hidden="true">Premium Performance</div>
-          <div class="cta-marquee-item" aria-hidden="true">Handgefertigt</div>
-          <div class="cta-marquee-item" aria-hidden="true">Limitierte Kollektion</div>
-        </div>
-        <div class="cta-marquee-fade-top"></div>
-        <div class="cta-marquee-fade-bottom"></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── HEIM BANNER ── -->
-  <div class="banner">
+  <!-- ── HEIM BANNER + CTA ── -->
+  <div class="cta-banner">
     <img src="https://www.figma.com/api/mcp/asset/dfcd3d8e-7624-4769-a214-3c304aa426bd" alt="Heim-Trikot Action" />
+    <section class="cta-jersey-section">
+      <div class="cta-jersey-inner">
+
+        <div class="cta-jersey-left">
+          <p class="cta-jersey-label">| Herren |</p>
+          <h2 class="cta-jersey-heading">Das Trikot<br>der Champions</h2>
+          <p class="cta-jersey-desc">Das Standard Louis Vuitton Jersey vereint das ikonische Damier-Schachbrett mit modernster Performance-Technologie — für Spieler, die keine Kompromisse eingehen.</p>
+          <button class="btn-rotating"><span>Jetzt Entdecken</span></button>
+        </div>
+
+        <div class="cta-jersey-marquee-wrap">
+          <div class="cta-marquee-track">
+            <div class="cta-marquee-item">Damier Schachbrett</div>
+            <div class="cta-marquee-item">LV Monogram</div>
+            <div class="cta-marquee-item">Premium Performance</div>
+            <div class="cta-marquee-item">Handgefertigt</div>
+            <div class="cta-marquee-item">Limitierte Kollektion</div>
+            <div class="cta-marquee-item" aria-hidden="true">Damier Schachbrett</div>
+            <div class="cta-marquee-item" aria-hidden="true">LV Monogram</div>
+            <div class="cta-marquee-item" aria-hidden="true">Premium Performance</div>
+            <div class="cta-marquee-item" aria-hidden="true">Handgefertigt</div>
+            <div class="cta-marquee-item" aria-hidden="true">Limitierte Kollektion</div>
+          </div>
+          <div class="cta-marquee-fade-top"></div>
+          <div class="cta-marquee-fade-bottom"></div>
+        </div>
+
+      </div>
+    </section>
   </div>
 
   <!-- ── HEIM-TRIKOT ── -->
