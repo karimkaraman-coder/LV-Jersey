@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Louis Trikots — Exklusiv Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kadwa:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @property --r {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes rotate-gradient {
+      to { --r: 360deg; }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #B8972A;
+      --black: #000000;
+      --white: #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-mid: #d9d9d9;
+      --gray-text: #555555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Kadwa', 'Georgia', serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* ── GLOWCARD SPOTLIGHT ─────────────────────── */
+    .jersey-card[data-glow],
+    .iconic-card[data-glow] {
+      position: relative;
+      --base: 20;
+      --spread: 15;
+      --radius: 3;
+      --border: 2;
+      --backdrop: hsl(20 55% 20% / 0.04);
+      --backup-border: hsl(20 55% 20% / 0.35);
+      --size: 280;
+      --outer: 1;
+      --border-size: calc(var(--border, 2) * 1px);
+      --spotlight-size: calc(var(--size, 280) * 1px);
+      --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
+      background-image: radial-gradient(
+        var(--spotlight-size) var(--spotlight-size) at
+        calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+        hsl(var(--hue, 20) 65% 30% / 0.12), transparent
+      );
+      background-attachment: fixed;
+      border: var(--border-size) solid var(--backup-border);
+      border-radius: calc(var(--radius) * 1px);
+    }
+
+    [data-glow]::before,
+    [data-glow]::after {
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: calc(var(--border-size, 2px) * -1);
+      border: var(--border-size, 2px) solid transparent;
+      border-radius: calc(var(--radius, 3) * 1px);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+      mask-clip: padding-box, border-box;
+      mask-composite: intersect;
+      -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+      -webkit-mask-clip: padding-box, border-box;
+      -webkit-mask-composite: source-in;
+    }
+
+    [data-glow]::before {
+      background-image: radial-gradient(
+        calc(var(--spotlight-size, 280px) * 0.75) calc(var(--spotlight-size, 280px) * 0.75) at
+        calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+        hsl(var(--hue, 20) 65% 28% / 1), transparent 100%
+      );
+      filter: brightness(2);
+    }
+
+    [data-glow]::after {
+      background-image: radial-gradient(
+        calc(var(--spotlight-size, 280px) * 0.5) calc(var(--spotlight-size, 280px) * 0.5) at
+        calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+        hsl(0 100% 100% / 0.7), transparent 100%
+      );
+    }
+
+    [data-glow] > [data-glow] {
+      position: absolute;
+      inset: 0;
+      will-change: filter;
+      opacity: var(--outer, 1);
+      border-radius: calc(var(--radius, 3) * 1px);
+      filter: blur(calc(var(--border-size, 2px) * 10));
+      background: none;
+      pointer-events: none;
+      border: none;
+    }
+
+    [data-glow] > [data-glow]::before {
+      inset: -10px;
+      border-width: 10px;
+    }
+
+    /* ── HEADER ─────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--gray-mid);
+    }
+
+    .header-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .header-side {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 1;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .icon-btn:hover { opacity: 0.6; }
+    .icon-btn svg { width: 26px; height: 26px; }
+
+    /* ── HERO ───────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .hero img,
+    .hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 40%,
+        rgba(0,0,0,0.55) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 100px;
+      gap: 14px;
+      text-align: center;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .hero-category {
+      color: rgba(255,255,255,0.85);
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      color: var(--white);
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .hero-link {
+      color: var(--white);
+      font-size: 15px;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
+    }
+    .hero-link:hover { opacity: 0.75; }
+
+    /* ── QUALITY SECTION ────────────────────────── */
+    .quality-section {
+      text-align: center;
+      padding: 90px 40px 60px;
+    }
+
+    .quality-section h2 {
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ── FEATURES GRID ──────────────────────────── */
+    .features-section {
+      padding: 20px 80px 80px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px 32px;
+    }
+
+    .feature-item { display: flex; flex-direction: column; }
+
+    .feature-item img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .feature-text {
+      padding: 8px 8px 0;
+      text-align: center;
+    }
+
+    .feature-text h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .feature-text p {
+      font-size: 14px;
+      color: var(--gray-text);
+      line-height: 1.7;
+    }
+
+    /* ── FULL-WIDTH BANNER ──────────────────────── */
+    .banner {
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+    }
+
+    .banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ── JERSEY SECTION (4 cols) ────────────────── */
+    .jersey-section {
+      padding: 80px 80px 60px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header .category {
+      font-size: 13px;
+      color: var(--gray-text);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .jersey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      margin-bottom: 0;
+    }
+
+    .jersey-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .jersey-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 18px;
+      transition: transform 0.35s ease;
+    }
+    .jersey-card:hover img { transform: scale(1.03); }
+
+    .jersey-card .club-name {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .jersey-card .discover-link {
+      font-size: 13px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      letter-spacing: 0.04em;
+      color: var(--black);
+    }
+    .jersey-card .discover-link:hover { color: var(--gold); }
+
+    .section-cta {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .btn-rotating {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px;
+      cursor: pointer;
+      border: none;
+      padding: 5px;
+      background: conic-gradient(
+        from var(--r),
+        #ffffff, #d4d4d4, #888888, #404040, #888888, #d4d4d4, #ffffff
+      );
+      animation: rotate-gradient 3s linear infinite;
+      outline: none;
+      text-decoration: none;
+    }
+    .btn-rotating::after {
+      content: '';
+      display: block;
+      position: absolute;
+      background: var(--white);
+      inset: 5px;
+      border-radius: 45px;
+      z-index: 1;
+      transition: opacity 0.3s ease-linear;
+    }
+    .btn-rotating > span {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      font-family: 'Kadwa', 'Georgia', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 9px 24px;
+      white-space: nowrap;
+    }
+
+    /* ── ICONIC JERSEYS (3 cols) ────────────────── */
+    .iconic-section {
+      padding: 80px 80px 60px;
+    }
+
+    .iconic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .iconic-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .iconic-card img {
+      width: 100%;
+      aspect-ratio: 363 / 430;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      transition: transform 0.35s ease;
+    }
+    .iconic-card:hover img { transform: scale(1.03); }
+
+    .iconic-card .jersey-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .iconic-card .discover-link {
+      font-size: 13px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      letter-spacing: 0.04em;
+    }
+    .iconic-card .discover-link:hover { color: var(--gold); }
+
+    /* ── SERVICES SECTION ───────────────────────── */
+    .services-section {
+      padding: 80px 80px 90px;
+      background: var(--gray-light);
+    }
+
+    .services-section > h2 {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 64px;
+      letter-spacing: 0.02em;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px;
+    }
+
+    .service-item h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .service-item p {
+      font-size: 15px;
+      line-height: 1.85;
+      text-align: center;
+      color: #333;
+    }
+
+    /* ── TEXT REVEAL ─────────────────────────── */
+    .rw {
+      display: inline-block;
+      position: relative;
+      margin-right: 0.15em;
+    }
+    .rw-g {
+      position: absolute;
+      opacity: 0.2;
+      pointer-events: none;
+      color: #333;
+    }
+    .rw-t {
+      color: #333;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    /* ── DIVIDER ────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--gray-mid);
+      margin: 0 80px;
+    }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer {
+      background: var(--white);
+      padding: 64px 80px 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      padding-bottom: 48px;
+    }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 400;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer-col a,
+    .footer-col span {
+      display: block;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .footer-col a:hover { text-decoration: underline; }
+
+    .footer-col p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .footer-col p a {
+      display: inline;
+      text-decoration: underline;
+    }
+
+    .footer-hr {
+      height: 1px;
+      background: var(--gray-mid);
+    }
+
+    .footer-legal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      font-size: 13px;
+      color: #555;
+      border-bottom: 1px solid var(--gray-mid);
+    }
+
+    .footer-legal a {
+      text-decoration: underline;
+      color: var(--black);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 36px 0 40px;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 1100px) {
+      .features-section,
+      .jersey-section,
+      .iconic-section,
+      .services-section,
+      footer { padding-left: 40px; padding-right: 40px; }
+
+      .jersey-grid { grid-template-columns: repeat(2, 1fr); }
+      .iconic-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .services-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .header-logo { font-size: 22px; }
+      .hero-title { font-size: 32px; }
+      .quality-section h2 { font-size: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .jersey-grid { grid-template-columns: repeat(2, 1fr); }
+      .iconic-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .features-section,
+      .jersey-section,
+      .iconic-section,
+      .services-section,
+      footer { padding-left: 20px; padding-right: 20px; }
+      .banner { height: 260px; }
+      .section-header h2 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-side">
+      <button class="icon-btn" aria-label="Menü öffnen">
+        <svg viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="2" rx="1" fill="black"/>
+          <rect y="10" width="28" height="2" rx="1" fill="black"/>
+          <rect y="20" width="28" height="2" rx="1" fill="black"/>
+        </svg>
+      </button>
+    </div>
+
+    <a class="header-logo" href="#">Louis Vuitton</a>
+
+    <div class="header-side">
+      <button class="icon-btn" aria-label="Mein Konto">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="9" r="6" stroke="black" stroke-width="1.8"/>
+          <path d="M2 27c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button class="icon-btn" aria-label="Warenkorb">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7h20l-2.2 13H5.2L3 7z" stroke="black" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9.5 7V5a4 4 0 018 0v2" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="9.5" cy="20.5" r="1" fill="black"/>
+          <circle cx="17.5" cy="20.5" r="1" fill="black"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="LV Goal.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay">
+      <p class="hero-category">| Herren |</p>
+      <h1 class="hero-title">Exklusiv Online: LV Jersey</h1>
+      <a class="hero-link" href="#">Die Neuheiten entdecken</a>
+    </div>
+  </section>
+
+  <!-- ── QUALITY ── -->
+  <section class="quality-section">
+    <h2>Überzeugen Sie sich von der Qualität<br>unserer Kreationen</h2>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features-section">
+    <div class="features-grid">
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/f1a5aa48-42dc-454f-8a85-88434972973b" alt="Atmungsaktive Technologie" />
+        <div class="feature-text">
+          <h3>Maximale Atmungsaktivität</h3>
+          <p>Atmungsaktive Hightech-Gewebe leiten Schweiß sofort nach außen ab und sorgen für schnelle Verdunstung.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/0e18687b-945d-4247-b8d7-8959444cd81e" alt="Ultraleichtes Material" />
+        <div class="feature-text">
+          <h3>Extrem geringes Eigengewicht</h3>
+          <p>Ultraleichte Synthetikfasern verhindern, dass sich das Trikot bei Nässe schwer mit Schweiß vollsaugt.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/48e54442-b613-4b88-8b2c-a9ffa90a378c" alt="Performance Fit" />
+        <div class="feature-text">
+          <h3>Performance Fit</h3>
+          <p>Der enge Schnitt minimiert den Luftwiderstand und bietet dem Gegner kaum Angriffsfläche zum Ziehen.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/65790d9d-de24-4479-bf1f-703b170bf050" alt="Klimakontrolle" />
+        <div class="feature-text">
+          <h3>Klimakontrolle</h3>
+          <p>Spezielle dreidimensionale Texturen regulieren die Körpertemperatur effektiv bei jedem Wetter und jeder Intensität.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/f4c2b639-bc97-4ab3-ae87-4f43f41ceae0" alt="Thermogeklebte Details" />
+        <div class="feature-text">
+          <h3>Thermogeklebte Details statt Nähte</h3>
+          <p>Geklebte Nähte und ultradünne Print-Logos reduzieren das Gewicht und verhindern schmerzhafte Hautirritationen.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <img src="https://www.figma.com/api/mcp/asset/cb2527e6-b33a-4390-8520-839b9b69c3ae" alt="Reißfestigkeit und Elastizität" />
+        <div class="feature-text">
+          <h3>Hohe Reißfestigkeit und Elastizität</h3>
+          <p>Hochflexible Stretch-Materialien überstehen extreme Belastungen im Zweikampf, ohne an Form zu verlieren.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HEIM BANNER ── -->
+  <div class="banner">
+    <img src="https://www.figma.com/api/mcp/asset/dfcd3d8e-7624-4769-a214-3c304aa426bd" alt="Heim-Trikot Action" />
+  </div>
+
+  <!-- ── HEIM-TRIKOT ── -->
+  <section class="jersey-section">
+    <div class="section-header">
+      <p class="category">| Herren |</p>
+      <h2>Heim-Trikot 2026</h2>
+    </div>
+    <div class="jersey-grid">
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/e0ef5af8-bc45-4add-ab06-d410be366e6d" alt="Real Madrid Heim-Trikot" />
+        <p class="club-name">Real Madrid</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/bd0c62ae-b787-418b-83ee-5b9f8094f5d5" alt="Paris Saint-Germain Heim-Trikot" />
+        <p class="club-name">Paris Saint-Germain</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/e23bbcf4-4f35-4f6c-9e2b-d91bd5abcce3" alt="AC Milan Heim-Trikot" />
+        <p class="club-name">AC Milan</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/4c56236e-d48a-4351-93d8-8186c873d170" alt="Manchester United Heim-Trikot" />
+        <p class="club-name">Manchester United</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+    </div>
+    <div class="section-cta">
+      <button class="btn-rotating"><span>Die Kreation entdecken</span></button>
+    </div>
+  </section>
+
+  <!-- ── AUSWÄRTS BANNER ── -->
+  <div class="banner">
+    <img src="https://www.figma.com/api/mcp/asset/46d5af7d-8442-4b82-a6ba-e3590e63bf58" alt="Auswärts-Trikot Action" />
+  </div>
+
+  <!-- ── AUSWÄRTS-TRIKOT ── -->
+  <section class="jersey-section">
+    <div class="section-header">
+      <p class="category">| Herren |</p>
+      <h2>Auswärts-Trikot 2026</h2>
+    </div>
+    <div class="jersey-grid">
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/01174172-588a-4fcd-9e7d-70d871de59f8" alt="Real Madrid Auswärts-Trikot" />
+        <p class="club-name">Real Madrid</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/8a70d28f-17d3-4dd7-883a-ea35a8a1417a" alt="Paris Saint-Germain Auswärts-Trikot" />
+        <p class="club-name">Paris Saint-Germain</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/f922d2cc-c3fc-41f5-b47a-f2c26b4dfe7d" alt="AC Milan Auswärts-Trikot" />
+        <p class="club-name">AC Milan</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="jersey-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/12d8de4a-221a-4860-9fc5-0f958e82d6e2" alt="Manchester United Auswärts-Trikot" />
+        <p class="club-name">Manchester United</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+    </div>
+    <div class="section-cta">
+      <button class="btn-rotating"><span>Die Auswahl entdecken</span></button>
+    </div>
+  </section>
+
+  <!-- ── ICONIC BANNER ── -->
+  <div class="banner">
+    <img src="https://www.figma.com/api/mcp/asset/4a1b0766-dcf3-4834-b575-e6c9ea42d9ef" alt="Stilvolle Ikonen" />
+  </div>
+
+  <!-- ── STILVOLLE IKONEN ── -->
+  <section class="iconic-section">
+    <div class="section-header">
+      <p class="category">| Herren |</p>
+      <h2>Stilvolle Ikonen</h2>
+    </div>
+    <div class="iconic-grid">
+      <div class="iconic-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/d0ce6462-1c2f-49db-a271-ea0b9504ad78" alt="L'Héritage Classique" />
+        <p class="jersey-name">L'Héritage Classique</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="iconic-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/6c9e75e9-4330-43aa-9301-263b4a178d6a" alt="Le Bleu Royal" />
+        <p class="jersey-name">Le Bleu Royal</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+      <div class="iconic-card" data-glow>
+        <img src="https://www.figma.com/api/mcp/asset/58e263a1-fa47-49f3-922e-51a2eab8e18e" alt="L'Éclipse Noire" />
+        <p class="jersey-name">L'Éclipse Noire</p>
+        <a class="discover-link" href="#">Entdecken</a>
+      </div>
+    </div>
+    <div class="section-cta">
+      <button class="btn-rotating"><span>Die Auswahl entdecken</span></button>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section class="services-section">
+    <h2>Louis Vuitton Services</h2>
+    <div class="services-grid">
+
+      <div class="service-item">
+        <h3>Heim-Trikot</h3>
+        <p>Das Heim-Trikot 2026 ist eine Hommage an das ikonischste Muster der Modewelt — das Damier-Schachbrett von Louis Vuitton, neu interpretiert für den Fußballplatz. In satten Schokoladen- und Cognactönen, durchzogen von einem feinen Goldglanz, trägt es die DNA des Maison mit absoluter Überzeugung. Das übergroße LV-Monogram auf der Brust ist kein Logo — es ist ein Statement. Ein Bekenntnis zu Klasse, zu Herkunft, zu Exzellenz. Das Trikot sitzt wie angegossen, folgt jeder Bewegung mit einer Präzision, die nur durch jahrelange Materialforschung möglich wird. Wer es trägt, trägt mehr als Stoff — er trägt Vermächtnis.</p>
+      </div>
+
+      <div class="service-item">
+        <h3>Auswärts-Trikot</h3>
+        <p>Ein Trikot, das das Licht der großen Arenen einfängt. Das Auswärts-Trikot 2026 präsentiert sich in einem kühlen, gebrochenen Weiß — einem Ton, der zwischen Champagner und Mondlicht oszilliert. Das allgegenwärtige LV-Monogram, fein in die Struktur des Gewebes eingewebt, tritt im Auswärts-Design besonders dezent und edel hervor: ein Hauch von Muster, der erst beim zweiten Blick seine ganze Tiefe offenbart. Goldene Akzente an Kragen und Ärmelsaum setzen präzise Zeichen — zurückhaltend in ihrer Platzierung, unmissverständlich in ihrer Wirkung. Ein Trikot für Momente, die Geschichte schreiben.</p>
+      </div>
+
+      <div class="service-item">
+        <h3>Ikonische Trikots</h3>
+        <p>Drei Kreationen, die über den Sport hinausweisen und in die Sphäre tragbarer Kunst eintreten. <em>L'Héritage Classique</em> vereint warme Erdtöne mit dem klassischen Monogram-Muster — verfeinert durch goldene Stickdetails am Kragen. <em>Le Bleu Royal</em> taucht das ikonische LV-Muster in tiefes Marineblau und verleiht ihm durch ein goldenes Wappen-Medaillon eine fast aristokratische Aura. <em>L'Éclipse Noire</em> reduziert auf absolutes Schwarz. Denn wahre Eleganz braucht keine Farbe.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-grid">
+
+      <div class="footer-col">
+        <h4>Wünschen Sie Beratung?</h4>
+        <p>
+          Kontaktieren Sie unseren Kundenservice gerne telefonisch unter
+          <a href="tel:+49211864700">+49 (0) 211 864 700</a>,
+          oder <a href="https://wa.me/49211864700" target="_blank" rel="noopener">WhatsApp</a>.
+        </p>
+        <a href="#">Häufige Fragen (FAQ)</a>
+        <a href="#">Reparatur</a>
+        <a href="#">Geschäfte</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#">Care Service</a>
+        <a href="#">Personalisierung</a>
+        <a href="#">Die Kunst des Schenkens</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Über Louis Vuitton</h4>
+        <a href="#">Fashion Shows</a>
+        <a href="#">Kunst &amp; Kultur</a>
+        <a href="#">Maison Louis Vuitton</a>
+        <a href="#">Nachhaltigkeit</a>
+        <a href="#">Neuigkeiten</a>
+        <a href="#">Ethik und Compliance</a>
+        <a href="#">Karriere</a>
+        <a href="#">Fondation Louis Vuitton</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Folgen Sie uns</h4>
+        <p>
+          Melden Sie sich für den
+          <a href="#" target="_blank" rel="noopener">Louis Vuitton Newsletter</a>
+          an und erfahren Sie als Erstes von Neuigkeiten der Maison, exklusiven Vorbestellungen und neuen Kollektionen.
+        </p>
+        <a href="#">Apps</a>
+        <span>Soziale Netzwerke</span>
+      </div>
+
+    </div>
+
+    <div class="footer-hr"></div>
+
+    <div class="footer-legal">
+      <span>Versand nach: Deutschland</span>
+      <span>
+        Seitenübersicht &nbsp;&nbsp;
+        <a href="#">Rechtliche Hinweise</a>
+      </span>
+    </div>
+
+    <div class="footer-bottom">Louis Vuitton</div>
+  </footer>
+
+  <script>
+    (function () {
+      document.addEventListener('pointermove', function (e) {
+        var r = document.documentElement;
+        r.style.setProperty('--x', e.clientX.toFixed(2));
+        r.style.setProperty('--xp', (e.clientX / window.innerWidth).toFixed(2));
+        r.style.setProperty('--y', e.clientY.toFixed(2));
+        r.style.setProperty('--yp', (e.clientY / window.innerHeight).toFixed(2));
+      });
+
+      document.querySelectorAll('.jersey-card[data-glow], .iconic-card[data-glow]').forEach(function (card) {
+        var inner = document.createElement('div');
+        inner.setAttribute('data-glow', '');
+        card.insertBefore(inner, card.firstChild);
+      });
+
+      // Text-Reveal für Service-Beschreibungen
+      document.querySelectorAll('.service-item p').forEach(function (p) {
+        p.innerHTML = p.innerHTML.replace(/<em>[^<]*<\/em>|\S+/g, function (match) {
+          return '<span class="rw">'
+            + '<span class="rw-g">' + match + '</span>'
+            + '<span class="rw-t">' + match + '</span>'
+            + '</span>';
+        });
+      });
+
+      var revealSpanGroups = [];
+      document.querySelectorAll('.service-item p').forEach(function (p) {
+        revealSpanGroups.push(Array.prototype.slice.call(p.querySelectorAll('.rw-t')));
+      });
+
+      var revealDuration = 5000;
+      var revealStarted = false;
+
+      function runReveal(startTime, ts) {
+        var progress = Math.min(1, (ts - startTime) / revealDuration);
+        revealSpanGroups.forEach(function (spans) {
+          var n = spans.length;
+          for (var i = 0; i < n; i++) {
+            spans[i].style.opacity = Math.max(0, Math.min(1, progress * n - i));
+          }
+        });
+        if (progress < 1) {
+          requestAnimationFrame(function (t) { runReveal(startTime, t); });
+        }
+      }
+
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !revealStarted) {
+            revealStarted = true;
+            requestAnimationFrame(function (ts) { runReveal(ts, ts); });
+            revealObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      var revealSection = document.querySelector('.services-section');
+      if (revealSection) revealObserver.observe(revealSection);
+    }());
+  </script>
+</body>
+</html>
