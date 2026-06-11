@@ -1141,18 +1141,20 @@
       var revealSection = document.querySelector('.services-section');
       if (revealSection) revealObserver.observe(revealSection);
 
-      // CTA Marquee — Opacity-Fade zur Mitte hin
-      var ctaWrap = document.querySelector('.cta-jersey-marquee-wrap');
-      if (ctaWrap) {
+      // CTA Marquee — Opacity-Fade zur Mitte hin (alle Instanzen)
+      var ctaWraps = document.querySelectorAll('.cta-jersey-marquee-wrap');
+      if (ctaWraps.length) {
         (function tickCta() {
-          var items = ctaWrap.querySelectorAll('.cta-marquee-item');
-          var rect = ctaWrap.getBoundingClientRect();
-          var centerY = rect.top + rect.height / 2;
-          items.forEach(function (item) {
-            var r = item.getBoundingClientRect();
-            var dist = Math.abs(centerY - (r.top + r.height / 2));
-            var norm = Math.min(dist / (rect.height / 2), 1);
-            item.style.opacity = (1 - norm * 0.82).toString();
+          ctaWraps.forEach(function (ctaWrap) {
+            var items = ctaWrap.querySelectorAll('.cta-marquee-item');
+            var rect = ctaWrap.getBoundingClientRect();
+            var centerY = rect.top + rect.height / 2;
+            items.forEach(function (item) {
+              var r = item.getBoundingClientRect();
+              var dist = Math.abs(centerY - (r.top + r.height / 2));
+              var norm = Math.min(dist / (rect.height / 2), 1);
+              item.style.opacity = (1 - norm * 0.82).toString();
+            });
           });
           requestAnimationFrame(tickCta);
         }());
