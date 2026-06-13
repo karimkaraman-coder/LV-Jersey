@@ -327,15 +327,20 @@
       cursor: pointer;
     }
 
+    .jersey-card .card-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
     .jersey-card img {
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      border-radius: 2px;
-      margin-bottom: 18px;
+      display: block;
       transition: transform 0.35s ease;
     }
-    .jersey-card:hover img { transform: scale(1.03); }
+    .jersey-card:hover img { transform: scale(1.05); }
 
     .jersey-card .club-name {
       font-size: 16px;
@@ -420,15 +425,20 @@
       cursor: pointer;
     }
 
+    .iconic-card .card-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
     .iconic-card img {
       width: 100%;
       aspect-ratio: 363 / 430;
       object-fit: cover;
-      border-radius: 2px;
-      margin-bottom: 24px;
+      display: block;
       transition: transform 0.35s ease;
     }
-    .iconic-card:hover img { transform: scale(1.03); }
+    .iconic-card:hover img { transform: scale(1.05); }
 
     .iconic-card .jersey-name {
       font-size: 17px;
@@ -1095,6 +1105,13 @@
         var inner = document.createElement('div');
         inner.setAttribute('data-glow', '');
         card.insertBefore(inner, card.firstChild);
+      });
+
+      document.querySelectorAll('.jersey-card img, .iconic-card img').forEach(function (img) {
+        var wrap = document.createElement('div');
+        wrap.className = 'card-img-wrap';
+        img.parentNode.insertBefore(wrap, img);
+        wrap.appendChild(img);
       });
 
       // Text-Reveal für Service-Beschreibungen
