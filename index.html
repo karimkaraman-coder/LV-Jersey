@@ -149,6 +149,42 @@
       z-index: 1;
     }
 
+    /* ── NAV OVERLAY ─────────────────────────────── */
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(5, 2, 0, 0.97);
+      z-index: 500;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+    .nav-overlay-label {
+      font-size: 11px; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .nav-overlay a {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff; text-decoration: none;
+      padding: 14px 0; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color 0.2s ease;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      width: 100%; max-width: 480px; text-align: center;
+    }
+    .nav-overlay a:last-child { border-bottom: none; }
+    .nav-overlay a:hover { color: var(--gold); }
+    .nav-overlay a.active { color: var(--gold); }
+    .nav-close {
+      position: absolute; top: 28px; right: 40px;
+      background: none; border: none; color: #fff;
+      font-size: 2rem; cursor: pointer; line-height: 1;
+      opacity: 0.6; transition: opacity 0.2s;
+    }
+    .nav-close:hover { opacity: 1; }
+
     .icon-btn {
       background: none;
       border: none;
@@ -740,10 +776,18 @@
 </head>
 <body>
 
+  <!-- ── NAV OVERLAY ── -->
+  <div class="nav-overlay" id="navOverlay">
+    <button class="nav-close" id="navClose">&#x2715;</button>
+    <p class="nav-overlay-label">Louis Vuitton Kollektionen</p>
+    <a href="index.html" class="active">Football Jersey</a>
+    <a href="basketball.html">Basketball Jersey</a>
+  </div>
+
   <!-- ── HEADER ── -->
   <header>
     <div class="header-side">
-      <button class="icon-btn" aria-label="Menü öffnen">
+      <button class="icon-btn" aria-label="Menü öffnen" id="menuBtn">
         <svg viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="28" height="2" rx="1" fill="black"/>
           <rect y="10" width="28" height="2" rx="1" fill="black"/>
@@ -1087,6 +1131,18 @@
 
   <script>
     (function () {
+      // Burger Menu
+      var menuBtn = document.getElementById('menuBtn');
+      var navOverlay = document.getElementById('navOverlay');
+      var navClose = document.getElementById('navClose');
+      if (menuBtn && navOverlay) {
+        menuBtn.addEventListener('click', function () { navOverlay.classList.add('open'); });
+        navClose.addEventListener('click', function () { navOverlay.classList.remove('open'); });
+        navOverlay.addEventListener('click', function (e) {
+          if (e.target === navOverlay) navOverlay.classList.remove('open');
+        });
+      }
+
       document.addEventListener('pointermove', function (e) {
         var r = document.documentElement;
         r.style.setProperty('--x', e.clientX.toFixed(2));
