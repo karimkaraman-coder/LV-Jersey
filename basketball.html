@@ -509,9 +509,43 @@
       .cta-jersey-marquee-wrap { height: 240px; }
       .nav-close { right: 20px; }
     }
+    /* ── POPUP MODAL ─────────────────────────────── */
+    .lv-popup-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(5, 2, 0, 0.80);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lv-popup-overlay.open { opacity: 1; pointer-events: all; }
+    .lv-popup-box {
+      background: var(--white); padding: 60px 80px;
+      text-align: center; position: relative;
+      max-width: 480px; width: 90%;
+    }
+    .lv-popup-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; font-size: 1.4rem;
+      cursor: pointer; color: var(--black); opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .lv-popup-close:hover { opacity: 1; }
+    .lv-popup-text {
+      font-family: 'Kadwa', 'Georgia', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; letter-spacing: 0.04em; color: var(--black);
+    }
   </style>
 </head>
 <body>
+
+  <!-- ── POPUP MODAL ── -->
+  <div class="lv-popup-overlay" id="lvPopup">
+    <div class="lv-popup-box">
+      <button class="lv-popup-close" id="lvPopupClose">&#x2715;</button>
+      <p class="lv-popup-text">Dafür gibt es eine 1</p>
+    </div>
+  </div>
 
   <!-- ── NAV OVERLAY ── -->
   <div class="nav-overlay" id="navOverlay">
@@ -866,6 +900,16 @@
 
   <script>
     (function () {
+      // Popup
+      var lvPopup = document.getElementById('lvPopup');
+      var lvPopupClose = document.getElementById('lvPopupClose');
+      function openPopup(e) { e.preventDefault(); lvPopup.classList.add('open'); }
+      function closePopup() { lvPopup.classList.remove('open'); }
+      document.querySelectorAll('.hero-link, .btn-rotating, .discover-link')
+        .forEach(function(el) { el.addEventListener('click', openPopup); });
+      lvPopupClose.addEventListener('click', closePopup);
+      lvPopup.addEventListener('click', function(e) { if (e.target === lvPopup) closePopup(); });
+
       // Burger Menu
       var menuBtn = document.getElementById('menuBtn');
       var navOverlay = document.getElementById('navOverlay');
