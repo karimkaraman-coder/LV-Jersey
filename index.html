@@ -201,8 +201,8 @@
     /* ── HERO ───────────────────────────────────── */
     .hero {
       position: relative;
-      height: 90vh;
-      min-height: 600px;
+      height: calc(100vh - 90px);
+      min-height: 500px;
       overflow: hidden;
     }
 
@@ -754,7 +754,10 @@
     }
 
     @media (max-width: 700px) {
-      .header-logo { font-size: 22px; }
+      header { padding: 0 16px; }
+      .header-logo { font-size: 18px; }
+      .hero { min-height: unset; }
+      .hero-overlay { padding-bottom: 40px; }
       .hero-title { font-size: 32px; }
       .quality-section h2 { font-size: 24px; }
       .features-grid { grid-template-columns: 1fr; }
